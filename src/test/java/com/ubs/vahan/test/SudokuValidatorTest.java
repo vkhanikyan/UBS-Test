@@ -1,7 +1,10 @@
 package com.ubs.vahan.test;
 
+import com.ubs.vahan.test.exception.SudokuValidatorException;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
@@ -15,7 +18,6 @@ import static org.junit.Assert.assertEquals;
  */
 @RunWith(Enclosed.class)
 public class SudokuValidatorTest {
-
 
     @RunWith(Parameterized.class)
     public static class ValidateTest {
@@ -96,14 +98,20 @@ public class SudokuValidatorTest {
         public String name;
 
         @Parameterized.Parameter(1)
-        public int[][] data;
+        public int[][] board;
 
         @Parameterized.Parameter(2)
         public boolean isValid;
 
+        @Rule
+        public ExpectedException exceptionRule = ExpectedException.none();
+
         @Test
-        public void validate() {
-            assertEquals(isValid, SudokuValidator.isValid(data));
+        public void validate() throws SudokuValidatorException {
+            if (!isValid) {
+                exceptionRule.expect(SudokuValidatorException.class);
+            }
+            SudokuValidator.validate(board);
         }
 
     }
@@ -117,6 +125,7 @@ public class SudokuValidatorTest {
                     {new int[]{1, 2, 3}, true},
                     {new int[]{1, 2, 3, 987, 654, 321, 5, 6, 7}, true},
                     {new int[]{-1, -2, 3, -987, -654, -321, -5, 6, 7}, true},
+                    {new int[]{-1, -2, 0, 3, -987, -654, -321, -5, 6, 0, 0, 7}, true}, // skip 0s
                     {new int[]{1, 2, 3, 1}, false},
                     {new int[]{1, 1, 2, 3, 4, 5, 156, 56}, false},
                     {new int[]{-1, -1, 2, -3, 4, -5, 156, 56}, false},
@@ -126,14 +135,14 @@ public class SudokuValidatorTest {
         }
 
         @Parameterized.Parameter
-        public int[] data;
+        public int[] values;
 
         @Parameterized.Parameter(1)
         public boolean isUnique;
 
         @Test
         public void isUnique() {
-            assertEquals(isUnique, SudokuValidator.isUnique(data));
+            assertEquals(isUnique, SudokuValidator.isUnique(values));
         }
     }
 }

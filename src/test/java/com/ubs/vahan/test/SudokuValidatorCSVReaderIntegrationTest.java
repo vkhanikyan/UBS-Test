@@ -1,22 +1,20 @@
 package com.ubs.vahan.test;
 
+import com.ubs.vahan.test.exception.SudokuValidatorException;
 import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 public class SudokuValidatorCSVReaderIntegrationTest {
     @Test
-    public void readInts_validSudokuBoardTest() throws IOException {
+    public void readInts_validSudokuBoardTest() throws IOException, SudokuValidatorException {
         int[][] data = CSVReaderSudoku.readInts(FileUtils.getAbsolutePathFromCSVFolder("valid_sudoku_board.csv"));
-        assertTrue(SudokuValidator.isValid(data));
+        SudokuValidator.validate(data);
     }
 
-    @Test
-    public void readInts_invalidSudokuBoardTest() throws IOException {
+    @Test(expected = SudokuValidatorException.class)
+    public void readInts_invalidSudokuBoardTest() throws IOException, SudokuValidatorException {
         int[][] data = CSVReaderSudoku.readInts(FileUtils.getAbsolutePathFromCSVFolder("invalid_sudoku_board.csv"));
-        assertFalse(SudokuValidator.isValid(data));
+        SudokuValidator.validate(data);
     }
 }

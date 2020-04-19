@@ -13,7 +13,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Used enum as it is comfortable to use it as util class
+ * Used enum as it is comfortable to use it as util class.
+ * As enum it by default supports that the class can't be extended and instantiated by the users
  */
 public enum CSVReaderSudoku {
     ;

@@ -1,15 +1,16 @@
 package com.ubs.vahan.test;
 
+import com.ubs.vahan.test.exception.SudokuValidatorException;
 import org.junit.Test;
 
 public class SudokuValidatorExceptionalCasesTest {
     @Test(expected = IllegalArgumentException.class)
-    public void nullTest() {
-        SudokuValidator.isValid(null);
+    public void nullTest() throws SudokuValidatorException {
+        SudokuValidator.validate(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void invalidHeightTest() {
+    public void invalidHeightTest() throws SudokuValidatorException {
         int[][] board = new int[][]{
                 {9, 0, 4, 0, 6, 0, 7, 0, 1},
                 {0, 2, 0, 4, 0, 3, 0, 8, 0},
@@ -20,11 +21,11 @@ public class SudokuValidatorExceptionalCasesTest {
                 {4, 0, 0, 0, 0, 0, 0, 0, 7},
                 {0, 8, 0, 6, 0, 4, 0, 5, 0},
         };
-        SudokuValidator.isValid(board);
+        SudokuValidator.validate(board);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void invalidWidthTest() {
+    public void invalidWidthTest() throws SudokuValidatorException {
         int[][] board = new int[][]{
                 {9, 0, 4, 0, 6, 0, 7, 0, 1, 0},
                 {0, 2, 0, 4, 0, 3, 0, 8, 0, 0},
@@ -36,11 +37,11 @@ public class SudokuValidatorExceptionalCasesTest {
                 {0, 8, 0, 6, 0, 4, 0, 5, 0, 0},
                 {5, 0, 6, 0, 8, 0, 2, 0, 3, 0}
         };
-        SudokuValidator.isValid(board);
+        SudokuValidator.validate(board);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void invalidNumberTest() {
+    public void invalidNumberTest() throws SudokuValidatorException {
         int[][] board = new int[][]{
                 {9, 0, 4, 0, 6, 0, 7, 0, 1},
                 {0, 2, 0, 4, 0, 3, 0, 8, 0},
@@ -52,11 +53,11 @@ public class SudokuValidatorExceptionalCasesTest {
                 {0, 8, 0, 6, 0, 4, 0, 5, 0},
                 {5, 0, 6, 0, 8, 0, 2, 0, 3}
         };
-        SudokuValidator.isValid(board);
+        SudokuValidator.validate(board);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void invalidNegativeNumberTest() {
+    public void invalidNegativeNumberTest() throws SudokuValidatorException {
         int[][] board = new int[][]{
                 {9, 0, 4, 0, 6, 0, 7, 0, 1},
                 {0, 2, 0, 4, 0, 3, 0, 8, 0},
@@ -68,11 +69,11 @@ public class SudokuValidatorExceptionalCasesTest {
                 {0, 8, 0, 6, 0, 4, 0, 5, 0},
                 {5, 0, 6, 0, 8, 0, 2, 0, 3}
         };
-        SudokuValidator.isValid(board);
+        SudokuValidator.validate(board);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void invalidShapeTest() {
+    public void invalidShapeTest() throws SudokuValidatorException {
         int[][] board = new int[][]{
                 {9, 0, 4, 0, 6, 0, 7, 0, 1},
                 {0, 2, 0, 4, 0, 3, 0, 8, 0},
@@ -84,6 +85,6 @@ public class SudokuValidatorExceptionalCasesTest {
                 {0, 8, 0, 6, 0, 4, 0, 5, 0},
                 {5, 0, 6, 0, 8, 0, 2, 0, 3}
         };
-        SudokuValidator.isValid(board);
+        SudokuValidator.validate(board);
     }
 }

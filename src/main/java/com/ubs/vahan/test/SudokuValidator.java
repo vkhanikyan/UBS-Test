@@ -1,16 +1,20 @@
 package com.ubs.vahan.test;
 
+import com.ubs.vahan.test.exception.SudokuValidatorException;
+
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Used enum as it is comfortable to use it as util class
+ * Used enum as it is comfortable to use it as util class.
+ * As enum it by default supports that the class can't be extended and instantiated by the users
  */
 public enum SudokuValidator {
     ;
 
-    public static boolean isValid(int[][] board) {
-        validate(board);
+    public static void validate(int[][] board) throws SudokuValidatorException {
+        basicValidation(board);
         for (int i = 0; i < 9; i++) {
 
             int[] row = new int[9];
@@ -21,13 +25,22 @@ public enum SudokuValidator {
                 row[j] = board[j][i];
                 square[j] = board[(i / 3) * 3 + j / 3][i * 3 % 9 + j % 3];
             }
-            if (!(isUnique(column) && isUnique(row) && isUnique(square)))
-                return false;
+
+            if (!(isUnique(column))) {
+                throw new SudokuValidatorException("the column is not unique. %s", Arrays.toString(column));
+            }
+
+            if (!(isUnique(row))) {
+                throw new SudokuValidatorException("the row is not unique. %s", Arrays.toString(row));
+            }
+
+            if (!(isUnique(square))) {
+                throw new SudokuValidatorException("the inner square is not unique. %s", Arrays.toString(square));
+            }
         }
-        return true;
     }
 
-    private static void validate(int[][] board) {
+    private static void basicValidation(int[][] board) {
         if (board == null) {
             throw new IllegalArgumentException("The board is empty");
         }
